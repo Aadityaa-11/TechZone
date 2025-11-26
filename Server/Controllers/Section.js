@@ -26,7 +26,12 @@ exports.CreateSection = async(req , res) =>{
                                                                         }
                                                                     } , 
                                                                     {new:true}
-                                                                );
+                                                                ).populate({
+                                                                    path:"CourseContent",
+                                                                    populate:{
+                                                                        path:"SubSection"
+                                                                    }
+                                                                }).exec();
         
         // return response
         return res.status(200).json({
@@ -38,7 +43,7 @@ exports.CreateSection = async(req , res) =>{
     }catch(error){
         return res.status(500).json({
             success:false,
-            message:`Course Creation Successfully`
+            message:"Failed in Creation of Section"
         })
     }
 }

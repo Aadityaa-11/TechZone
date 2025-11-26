@@ -5,21 +5,23 @@ const {
   DeleteAccounts,
   UpdateProfile,
   getAllUserDetails,
-  updateDisplayPicture,
+  UpdateDisplayPicture,
   getEnrolledCourses,
   instructorDashboard,
-} = require("../controllers/Profile")
+} = require("../Controllers/Profile")
 
 // ********************************************************************************************************
 //                                      Profile routes
 // ********************************************************************************************************
-// Delet User Account
+
+// Delete User Account
 router.delete("/deleteProfile", AuthN, DeleteAccounts)
-router.put("/updateProfile", AuthN, UpdateProfile)
+router.put("/UpdateProfile", AuthN, UpdateProfile)
 router.get("/getUserDetails", AuthN, getAllUserDetails)
+
 // Get Enrolled Courses
 // router.get("/getEnrolledCourses", AuthN, getEnrolledCourses)
-// router.put("/updateDisplayPicture", AuthN, updateDisplayPicture)
+router.put("/updateDisplayPicture", AuthN, UpdateDisplayPicture)
 // router.get("/instructorDashboard", AuthN, isInstructor, instructorDashboard)
 
 module.exports = router

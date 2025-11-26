@@ -13,9 +13,6 @@ exports.dbconnect = ()=>{
         console.log(`Issue in Db connection`);
         console.error(error);
         process.exit(1);
-
-    })
-   
-    
+    })    
 }
 

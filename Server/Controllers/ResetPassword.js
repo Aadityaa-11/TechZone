@@ -8,9 +8,9 @@ const crypto = require("crypto")
 // ResetPasswordToken
 exports.ResetPasswordToken = async(req , res) =>{
     try{
-
+        console.log("req.body" , req.body)
         // fetch the email id from req body
-        const EmailId = req.body.EmailId;
+        const {EmailId} = req.body;
 
         // check user for this email , validate the email id 
         const user  = await User.findOne({EmailId});
@@ -21,21 +21,28 @@ exports.ResetPasswordToken = async(req , res) =>{
                 message:`Your Email is not Registered with us`
             })
         }
+        console.log("Emailid" , EmailId)
 
         // generate Token 
-        const Token = crypto.randomUUID();
+        const token = crypto.randomBytes(20).toString("hex")
+        //   const rawToken = crypto.randomBytes(32).toString("hex");
+        // const hashedToken = crypto.createHash("sha256").update(rawToken).digest("hex");
+        // console.log("HashedToken" , hashedToken)
         // Upadate user by token and expiry time 
         const upadatedDetails = await User.findOneAndUpdate(
                                             {EmailId : EmailId},
                                             {
-                                                Token:Token,
+                                                // token:hashedToken,
+                                                Token : token,
                                                 ResetPasswordExpires:Date.now() + 5*60*1000,
                                             },
                                             {new : true} )// this return a updated document 
                                                          // without this line old doc is return
 
         // create url 
-        const url = `http://Localhost:3000/update-password/${Token}`
+        // const url = `http://Localhost:3000/update-password/${rawToken}`
+                const url = `http://Localhost:3000/update-password/${token}`
+
          
         // mail sender
         await MailSender(EmailId , 
@@ -45,12 +52,14 @@ exports.ResetPasswordToken = async(req , res) =>{
 
         return res.status(200).json({
             success:true,
-            message : `Email send Successfully , Please Check YOur Email to continue Further`
+            message : `Email send Successfully , Please Check YOur Email to continue Further`,
+            data : url
         })
     }catch(error){
        return res.status(500).json({
             success:false,
-            message:`user role connot verified , please try again later`
+            message:`user role connot verified , please try again later`,
+            
         })
     }
 }
@@ -60,7 +69,7 @@ exports.ResetPasswordToken = async(req , res) =>{
 exports.ResetPassword = async(req , res)=>{
     try{
         // data fetch
-        const{Password , ConfirmPassword , Token} = req.body;
+        const{EmailId ,Password , ConfirmPassword , Token} = req.body;
         // validation
         if(Password !== ConfirmPassword){
             return res.status(500).json({
@@ -74,7 +83,7 @@ exports.ResetPassword = async(req , res)=>{
         if(!UserDetails){
             return res.status(500).json({
                 success:false,
-                message:`Token is invalid`
+                message:`token is invalid`
             })
         }
 
@@ -94,6 +103,11 @@ exports.ResetPassword = async(req , res)=>{
             {Token:Token},
             {Password : hashedpassword},
             {new:true},
+        )
+
+         await MailSender(EmailId , 
+                         "Password Changed Successfully",
+                         `Your Password for this EmailId is ${EmailId} is Successfully Changed`
         )
 
         // return response

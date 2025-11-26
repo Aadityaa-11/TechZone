@@ -11,21 +11,27 @@ const CourseSchema = new mongoose.Schema({
     Instructor:{
         type : mongoose.Schema.Types.ObjectId,
         ref:"User",
-        require:true,
+        required:true,
     },
-    WahtYouWillLearn:{
+    WhatYouWillLearn:{
         type:String,
     },
-    CourseContent :{
+    CourseContent :[
+        {
         type:mongoose.Schema.Types.ObjectId,
         ref:"Section",
-    },
+        }
+    ],
     ratingAndReviews : [
         {
         type:mongoose.Schema.Types.ObjectId,
         ref:"RatingAndReviews"
         }
     ],
+    Price:{
+        type:Number
+
+    },
     ThumbNail:{
         type:String,
     },
@@ -34,14 +40,23 @@ const CourseSchema = new mongoose.Schema({
         ref:"Category"
     },
     Tags:{
-        type:"string",
+        type:[String],
     },
     StudentEnrolled:[
         {
             type:mongoose.Schema.Types.ObjectId,
             required:true,
             ref:"User",
-        }]
+        }
+    ],
+    Status : {
+        type: String,
+        enum: ["Draft" , "Published"]
+    },
+    Instructions : {
+        type: [String],
+    }
+    
 
 });
 

@@ -1,6 +1,7 @@
 const SubSection = require("../Models/SubSection")
-const Cloudinary = require("../utils/Cloudinary")
+const Cloudinary = require("../Config/Cloudinary")
 const Section = require("../Models/Section")
+const { UploadImageToCloudinary } = require("../Config/Cloudinary")
 require("dotenv").config()
 
 exports.CreateSubSection = async(req , res) =>{
@@ -10,7 +11,8 @@ exports.CreateSubSection = async(req , res) =>{
         const {SectionId , Title , Description , TimeDuration } = req.body
 
         // extract file/video
-        const Video = req.file.Videofile
+        const Video = req.files.VideoFile
+        console.log("video" , Video)
 
         // validation
         if(!SectionId || !Title || !Description ||  !TimeDuration ){
@@ -21,8 +23,8 @@ exports.CreateSubSection = async(req , res) =>{
         }
 
         // upload to clodinary
-        const UploadDetails = await Cloudinary.UploadImageToCloudinary(Video , process.env.FOLDER_NAME);
-
+        const UploadDetails = await UploadImageToCloudinary(Video , process.env.FOLDER_NAME);
+        console.log("uploadDetails" , UploadDetails)
         // create a subsection
         const SubSectionDetails = await SubSection.create({
             Title : Title,
@@ -30,23 +32,24 @@ exports.CreateSubSection = async(req , res) =>{
             Description : Description,
             VideoUrl:UploadDetails.secure_url,
         })
+        console.log("Subsections :" , SubSectionDetails)
 
         // update section with subsection object id 
         const UpdatedSection= await Section.findByIdAndUpdate( 
-                                                            SectionId,
+                                                            {_id : SectionId},
                                                             {
                                                                 $push:{
                                                                     SubSection:SubSectionDetails._id,
                                                                 }
                                                             },
-                                                            {new:update}
+                                                            {new:true}
 
-                                                             )
+                                                             ).populate("SubSection").exec()
         // return response 
         return res.status(200).json({
             success:true,
             message:`Subsection created successfully`,
-            UpdatedSection,
+            data : UpdatedSection,
         })
 
     }catch(error){

@@ -1,10 +1,14 @@
+const {mongoose } = require("mongoose");
+const { UploadImageToCloudinary } = require("../Config/Cloudinary");
 const Profile = require("../Models/Profile");
-const User = require("../Models/Profile")
+const User = require("../Models/User")
+require("dotenv").config()
 
 exports.UpdateProfile = async(req , res)=>{
     try{
         // data fetch
-        const{Gender , DateOfBirth , ContactNo , About} = req.body;
+        console.log("Inside Updatprofile function")
+        const{Gender , DateOfBirth , ContactNumber , About} = req.body;
 
         // get UserId 
         const Id = req.User.id;
@@ -18,20 +22,21 @@ exports.UpdateProfile = async(req , res)=>{
         }
 
         // find profile
-        const UserDetails = User.findById(Id) ;
+        const UserDetails = await User.findById(Id) ;
+        // const ProfileDetails = await Profile.findById(UserDetails.AdditionalDetails)
         const ProfileId = UserDetails.AdditionalDetails;
         const ProfileDetails = await Profile.findById(ProfileId);
 
         // update profile 
         ProfileDetails.DateOfBirth = DateOfBirth,
         ProfileDetails.Gender = Gender,
-        ProfileDetails.ContactNo = ContactNo,
+        ProfileDetails.ContactNumber = ContactNumber,
         ProfileDetails.About = About
         await ProfileDetails.save();
          
         // return response
         return res.status(200).json({
-            success:false,
+            success:true,
             message:`Profile Update Successfully`,
             ProfileDetails,
         })
@@ -77,9 +82,11 @@ exports.DeleteAccounts = async(req , res)=>{
 
 exports.getAllUserDetails = async(req , res) =>{
      try {
-    const id = req.user.id
+        console.log("id" , req.User)
+    const id = req.User.id
+    
     const userDetails = await User.findById(id)
-      .populate("additionalDetails")
+      .populate("AdditionalDetails")
       .exec()
     console.log(userDetails)
     res.status(200).json({
@@ -88,9 +95,53 @@ exports.getAllUserDetails = async(req , res) =>{
       data: userDetails,
     })
   } catch (error) {
-    return res.status(500).json({
+    return res.status(500).json({ 
       success: false,
       message: error.message,
     })
   }
 }
+
+exports.UpdateDisplayPicture = async(req , res) =>{
+    try{
+        console.log("req.files:", req.files); // check keys
+    console.log("req.User:", req.User);
+        console.log("req files" , req.User)
+        const DisplayPicture = req.files.DisplayPicture;
+        console.log("DisplayPidcure" , DisplayPicture)
+        const UserId = req.User.id;
+        console.log("UserId" , UserId)
+        const Image = await UploadImageToCloudinary(
+            DisplayPicture,
+            process.env.CLOUD_FOLDER_NAME,
+            1000,
+            1000
+        )  
+        
+        const UpadatedProfile = await User.findByIdAndUpdate(
+            req.User.id,
+            {Image : Image.secure_url},
+            {new : true}
+        );
+        if(!UpadatedProfile){
+            return res.status(404).json({
+                success: false,
+                message : "user not found!"
+
+            })
+        }
+        res.status(200).json({
+            success:true,
+            message:"Image Uploaded Successfully",
+            data : UpadatedProfile
+
+        })
+
+    }catch(error){
+        res.status(500).json({
+            success:false,
+            message:error.message,
+        })
+    }
+}
+

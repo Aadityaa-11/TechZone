@@ -55,12 +55,12 @@ exports.SendOTP = async (req , res) => {
         console.log(otpBody)
 
         // Send email with OTP template
-        const mailResponse = await MailSender(
-            EmailId,
-            "OTP Verification",   // subject
-            otpTemplate(otp)      // html body with otp
-        );
-        console.log("Mail response:", mailResponse);
+        // const mailResponse = await MailSender(
+        //     EmailId,
+        //     "OTP Verification",   // subject
+        //     otpTemplate(otp)      // html body with otp
+        // );
+        // console.log("Mail response:", mailResponse);
 
         return res.status(200).json({
             success:true,
@@ -120,7 +120,7 @@ exports.Signup = async(req , res) =>{
 
         // find most recent otp store in database
         const recentotp = await OTP.find({EmailId}).sort({createdAt:-1}).limit(1);
-        console.log("recentotp",recentotp);
+        console.log("recentotp" , recentotp);
         // if(recentotp.length == 0){  // recentotp return a single document not array 
         if(!recentotp){
             // otp not found
@@ -152,12 +152,12 @@ exports.Signup = async(req , res) =>{
             EmailId,
             ContactNumber,
             Password:hashedpassword,
+            ConfirmPassword:hashedpassword,
             AccountType,
-            AdditionalDeatails : ProfileDetails._id,
-            image:`https://api.dicebear.com/5.x/initials/svg?seed=${FirstName} ${LastName}`
-
-            
+            AdditionalDetails : ProfileDetails._id,
+            Image:`https://api.dicebear.com/5.x/initials/svg?seed=${FirstName}${LastName}`   
         })
+
         return res.status(200).json({
             success:true,
             message:`User registered Successfully`,
@@ -190,7 +190,7 @@ exports.LoginIn = async(req, res) =>{
         }
 
         // user check exist or not 
-        const useralreadyexit = await User.findOne({EmailId});
+        const useralreadyexit = await User.findOne({EmailId}).populate("AdditionalDetails").exec()
         if(!useralreadyexit){
             return res.status(404).json({
                 success:false,
@@ -201,16 +201,18 @@ exports.LoginIn = async(req, res) =>{
         // verifying  the password and generating jwt token and cookie parser
         const Payload = {
             EmailId : useralreadyexit.EmailId,
-            id: useralreadyexit._id,
+            id: useralreadyexit._id.toString(),
             AccountType: useralreadyexit.AccountType,
         }
+        console.log("AccountType" , useralreadyexit.AccountType)
+        
     
         if(await bcrypt.compare(Password , useralreadyexit.Password)){
-            let Token = jwt.sign(Payload , process.env.JWT_SECRET , { expiresIn: '1h'});
-            console.log("TOken :" , Token)
+            let token = jwt.sign(Payload , process.env.JWT_SECRET , { expiresIn: '1h'});
+            console.log("TOken :" , token )
             // save token to user document in database 
             // useralreadyexit = useralreadyexit.toObject();
-            useralreadyexit.Token = Token;
+            useralreadyexit.token = token;
             useralreadyexit.Password = undefined;
         
             // set cookies for token and return success response
@@ -219,9 +221,9 @@ exports.LoginIn = async(req, res) =>{
                 httpOnly : true,
             }
 
-            return res.cookie("Token" , Token , option).status(200).json({
+            return res.cookie("token" , token , option).status(200).json({
                 success:true,
-                Token , 
+                token , 
                 useralreadyexit,
                 message :`Login successfully `
 

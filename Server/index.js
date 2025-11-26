@@ -5,11 +5,12 @@ const userRoutes = require("./Routes/User");
 const profileRoutes = require("./Routes/Profile");
 const paymentRoutes = require("./Routes/Payment");
 const courseRoutes = require("./Routes/Course");
+
 // const contactUsRoute = require("./routes/Contact");
 const {dbconnect} = require("./Config/Database");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const {UploadImageToCloudinary } = require("./utils/Cloudinary");
+const {UploadImageToCloudinary } = require("./Config/Cloudinary");
 const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 
@@ -35,7 +36,12 @@ app.use(
 	})
 )
 //cloudinary connection
-UploadImageToCloudinary();
+//UploadImageToCloudinary();
+const { cloudinaryConnect } = require("./Config/Cloudinary");
+
+//cloudinary connection
+cloudinaryConnect();  // ✅ just connect, do NOT pass files here
+
 
 //routes
 app.use("/api/v1/auth", userRoutes);

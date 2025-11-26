@@ -8,7 +8,7 @@ const router = express.Router()
 const {
   CreateCourse,
   showAllCourses,
-  getCourseDetails,
+  GetCourseDetails,
   getFullCourseDetails,
   editCourse,
   getInstructorCourses,
@@ -24,18 +24,18 @@ const {
 } = require("../Controllers/Category")
 
 // // Sections Controllers Import
-// const {
-//   createSection,
-//   updateSection,
-//   deleteSection,
-// } = require("../controllers/Section")
+const {
+  CreateSection,
+  updateSection,
+  deleteSection,
+} = require("../Controllers/Section")
 
 // // Sub-Sections Controllers Import
-// const {
-//   createSubSection,
-//   updateSubSection,
-//   deleteSubSection,
-// } = require("../controllers/Subsection")
+const {
+  CreateSubSection,
+  updateSubSection,
+  deleteSubSection,
+} = require("../Controllers/SubSection")
 
 // // Rating Controllers Import
 // const {
@@ -56,9 +56,9 @@ const { AuthN , isInstructor, isStudent, IsAdmin } = require("../Middlewares/Aut
 // ********************************************************************************************************
 
 // Courses can Only be Created by Instructors
-router.post("/createCourse", AuthN, isInstructor, CreateCourse)
+router.post("/CreateCourse", AuthN, isInstructor, CreateCourse)
 //Add a Section to a Course
-// router.post("/addSection", auth, isInstructor, createSection)
+router.post("/addSection", AuthN, isInstructor, CreateSection)
 // // Update a Section
 // router.post("/updateSection", auth, isInstructor, updateSection)
 // // Delete a Section
@@ -68,11 +68,11 @@ router.post("/createCourse", AuthN, isInstructor, CreateCourse)
 // // Delete Sub Section
 // router.post("/deleteSubSection", auth, isInstructor, deleteSubSection)
 // // Add a Sub Section to a Section
-// router.post("/addSubSection", auth, isInstructor, createSubSection)
+router.post("/AddSubSection", AuthN, isInstructor, CreateSubSection)
 // Get all Registered Courses
-// router.get("/getAllCourses", getAllCourses)
+router.get("/ShowAllCourses", showAllCourses)
 // Get Details for a Specific Courses
-// router.post("/getCourseDetails", showAllCourses)
+router.post("/getCourseDetails", GetCourseDetails)
 // Get Details for a Specific Courses
 // router.post("/getFullCourseDetails", auth, getFullCourseDetails)
 // // Edit Course routes
