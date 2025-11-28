@@ -7,6 +7,7 @@ import Navbar from './Components/Common/Navbar';
 import Login from "./Pages/Login"
 import OpenRoute from './Components/Core/Auth/OpenRoute';
 import  Signup  from './Pages/Signup';
+import VerifyEmailId from "./Pages/VerifyEmailId"
 import { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -27,14 +28,23 @@ function App() {
         />
 
         <Route
-          path='/Signup'
+          path='/signup'
           element={
             <OpenRoute>
               <Signup/>
             </OpenRoute>
           }
         />
-      </Routes>
+
+      <Route
+        path='/verify-emailid'
+        element={
+          <OpenRoute>
+             <VerifyEmailId/>
+          </OpenRoute>
+        }
+        />
+    </Routes>
       
 
 

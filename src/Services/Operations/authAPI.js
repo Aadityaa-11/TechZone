@@ -4,6 +4,7 @@ import { setLoading , setToken } from "../../slices/authSlice"
 import { apiConnector } from "../apiconnector"
 import { endpoints } from "../apis"
 import { Navigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
 
 const {
     SENDOTP_API,
@@ -35,5 +36,31 @@ export function sendotp(EmailId , navigate){
         dispatch(setLoading(false));
         toast.dismiss(toastId)
     }
+}
+
+export function Singup(
+    FirstName,
+    LastName,
+    EmailId,
+    Password,
+    ConfirmPassword,
+    AccountType,
+    otp,
+){
+    return async(dispatch) => {
+      dispatch(setLoading(true));
+      try{
+        const response = await apiConnector(POST , SIGNUP_API , {
+            FirstName, 
+            LastName,
+            EmailId,
+            Password,
+            ConfirmPassword,
+            AccountType,
+            otp,
+        })
+      }
+    }
+
 }
 
