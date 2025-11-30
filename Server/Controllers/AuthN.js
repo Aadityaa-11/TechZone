@@ -89,12 +89,11 @@ exports.Signup = async(req , res) =>{
             Password,
             ConfirmPassword,
             AccountType,
-            ContactNumber,
             otp,
         } = req.body;
 
         // validate kar 
-        if(!FirstName  || !LastName || !EmailId || !Password || !ConfirmPassword || !OTP || !ContactNumber){
+        if(!FirstName  || !LastName || !EmailId || !Password || !ConfirmPassword || !otp ){
             return res.status(500).json({
                 success:false,
                 message:`All Fields are Required`
@@ -114,12 +113,15 @@ exports.Signup = async(req , res) =>{
         if(useralreadyexit){
             return res.status(400).json({
                 success:false,
-                message:`Useralready Exits`
+                message:`User already Exits,  please sign it to continue`
             })
         }
 
         // find most recent otp store in database
+        console.log("EmailId" , EmailId)
         const recentotp = await OTP.find({EmailId}).sort({createdAt:-1}).limit(1);
+        // const recentotp = await OTP.findOne({ EmailId }).sort({ createdAt: -1 });
+
         console.log("recentotp" , recentotp);
         // if(recentotp.length == 0){  // recentotp return a single document not array 
         if(!recentotp){
@@ -150,7 +152,6 @@ exports.Signup = async(req , res) =>{
             FirstName , 
             LastName,
             EmailId,
-            ContactNumber,
             Password:hashedpassword,
             ConfirmPassword:hashedpassword,
             AccountType,

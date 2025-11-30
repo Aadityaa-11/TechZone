@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
 import { Route, Routes } from 'react-router-dom';
@@ -9,7 +9,7 @@ import OpenRoute from './Components/Core/Auth/OpenRoute';
 import  Signup  from './Pages/Signup';
 import VerifyEmailId from "./Pages/VerifyEmailId"
 import { Toaster } from 'react-hot-toast';
-
+import{ ForgetPassword} from './Pages/ForgetPassword'
 function App() {
   return (
     <div className='bg-richblack-900 w-screen min-h-screen flex flex-col font-inter'>
@@ -19,7 +19,7 @@ function App() {
         <Route path='/'   element={<Home/>} />
 
         <Route
-          path='/login'
+          path='login'
           element={
             <OpenRoute>
               <Login/>
@@ -28,7 +28,7 @@ function App() {
         />
 
         <Route
-          path='/signup'
+          path='signup'
           element={
             <OpenRoute>
               <Signup/>
@@ -37,11 +37,18 @@ function App() {
         />
 
       <Route
-        path='/verify-emailid'
+        path='verify-emailid'
         element={
           <OpenRoute>
              <VerifyEmailId/>
           </OpenRoute>
+        }
+        />
+
+        <Route
+        path='forget-password'
+        element={
+          <ForgetPassword/>
         }
         />
     </Routes>

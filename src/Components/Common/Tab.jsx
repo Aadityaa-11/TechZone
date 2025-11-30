@@ -1,4 +1,7 @@
-export default function Tab({ tabData, field, setField }) {
+import React from 'react'
+
+export default function Tab({ tabData, field, setfield }) {
+
     return (
       <div
         style={{
@@ -9,7 +12,7 @@ export default function Tab({ tabData, field, setField }) {
         {tabData.map((tab) => (
           <button
             key={tab.id}
-            onClick={() => setField(tab.type)}
+            onClick={() => setfield(tab.type)}
             className={`${
               field === tab.type
                 ? "bg-richblack-900 text-richblack-5"

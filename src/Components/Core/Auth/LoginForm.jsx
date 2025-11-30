@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import {AiOutlineEyeInvisible , AiOutlineEye} from "react-icons/ai"
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import {login} from '../../../Services/Operations/authAPI'
 
 const LoginForm = ({setisLoggedIn}) => {
 
-    const [formData , setformData] = useState({email:"" , password:""})
+    const [formData , setformData] = useState({EmailId:"" , Password:""})
     const [showpassword , setshowpassword] = useState(false);
-    const Navigate = useNavigate()
+    const Navigate = useNavigate();
+    const dispatch = useDispatch();
     
 
     function changeHandler(event){
@@ -15,13 +18,18 @@ const LoginForm = ({setisLoggedIn}) => {
             {
                 ...prevdata,
                 [event.target.name] : event.target.value
-
             }
         ))
     }
 
     function submithandler(event){
         event.preventDefault();
+
+        
+
+        dispatch(login(formData))
+
+        dispatchEvent()
         setisLoggedIn(true)
         toast.success("Logged In Successfully")
         Navigate("/dashboard")
@@ -38,8 +46,8 @@ const LoginForm = ({setisLoggedIn}) => {
                required
                type='email'
                placeholder='Enter Email Address'
-               name='email'
-               value={FormData.email}
+               name='EmailId'
+               value={FormData.EmailId}
                onChange={changeHandler}
                className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]'
             />
@@ -54,8 +62,8 @@ const LoginForm = ({setisLoggedIn}) => {
                required
                type= {showpassword ? ("text") : ("password")}
                placeholder='Enter Password'
-               name='password'
-               value={FormData.password}
+               name='Password'
+               value={FormData.Password}
                onChange={changeHandler}
                className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]'
             />
