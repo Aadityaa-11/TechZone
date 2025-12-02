@@ -102,12 +102,13 @@ exports.ResetPassword = async(req , res)=>{
         await User.findOneAndUpdate(
             {Token:Token},
             {Password : hashedpassword},
+            {ConfirmPassword : hashedpassword},
             {new:true},
         )
-
-         await MailSender(EmailId , 
+        
+         await MailSender(UserDetails.EmailId , 
                          "Password Changed Successfully",
-                         `Your Password for this EmailId is ${EmailId} is Successfully Changed`
+                         `Your Password for this EmailId is ${UserDetails.EmailId} is Successfully Changed`
         )
 
         // return response

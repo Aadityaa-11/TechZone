@@ -5,6 +5,7 @@ const userRoutes = require("./Routes/User");
 const profileRoutes = require("./Routes/Profile");
 const paymentRoutes = require("./Routes/Payment");
 const courseRoutes = require("./Routes/Course");
+const contactUsRoute = require("./Routes/Contactus")
 
 // const contactUsRoute = require("./routes/Contact");
 const {dbconnect} = require("./Config/Database");
@@ -48,7 +49,7 @@ app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/payment", paymentRoutes);
-// app.use("/api/v1/reach", contactUsRoute);
+app.use("/api/v1/reach", contactUsRoute);
 
 //def route
 

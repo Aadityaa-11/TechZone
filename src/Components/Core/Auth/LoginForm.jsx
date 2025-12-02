@@ -9,9 +9,10 @@ const LoginForm = ({setisLoggedIn}) => {
 
     const [formData , setformData] = useState({EmailId:"" , Password:""})
     const [showpassword , setshowpassword] = useState(false);
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     
+    const {EmailId , Password} = formData
 
     function changeHandler(event){
         setformData((prevdata) =>(
@@ -24,15 +25,7 @@ const LoginForm = ({setisLoggedIn}) => {
 
     function submithandler(event){
         event.preventDefault();
-
-        
-
-        dispatch(login(formData))
-
-        dispatchEvent()
-        setisLoggedIn(true)
-        toast.success("Logged In Successfully")
-        Navigate("/dashboard")
+        dispatch(login(EmailId , Password , navigate))
     }
 
   return (
@@ -74,14 +67,16 @@ const LoginForm = ({setisLoggedIn}) => {
                 (<AiOutlineEye fontsize='24px' fill='#AFB2BF' />)}
             </span>
 
-            <Link to="#">
+            <Link to="/forget-password">
             <p className='text-xs mt-1 text-blue-100 max-w-max ml-auto'>
                 Forget Password
             </p>
             </Link>
         </label>
 
-        <button className=' bg-yellow-50 rounded font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>
+        <button 
+        type='submit'
+        className=' bg-yellow-50 rounded font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>
            sign In 
         </button>
       

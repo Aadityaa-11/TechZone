@@ -10,6 +10,7 @@ import  Signup  from './Pages/Signup';
 import VerifyEmailId from "./Pages/VerifyEmailId"
 import { Toaster } from 'react-hot-toast';
 import{ ForgetPassword} from './Pages/ForgetPassword'
+import Aboutus from './Pages/Aboutus';
 function App() {
   return (
     <div className='bg-richblack-900 w-screen min-h-screen flex flex-col font-inter'>
@@ -50,6 +51,14 @@ function App() {
         element={
           <ForgetPassword/>
         }
+        />
+
+        <Route
+        path='about'
+        element={
+          <Aboutus/>
+        }
+        
         />
     </Routes>
       

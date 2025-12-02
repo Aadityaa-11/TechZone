@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
+import { GetPassowordResetToken } from '../Services/Operations/authAPI';
 
 export const ForgetPassword = () =>{
 
@@ -12,9 +13,9 @@ export const ForgetPassword = () =>{
 
     function handleSubmit(e){
         e.preventDefault();
-
-        
+        dispatch(GetPassowordResetToken(EmailId , SetEmailSend))
     }
+    
     return(
         <div className='min-h-[calc(100vh-3.5rem)] flex justify-center items-center'>
             {
@@ -40,42 +41,42 @@ export const ForgetPassword = () =>{
                         }
                     </p>
 
-                                <form onSubmit={handleSubmit}>
-                                    {
-                                        !EmailSend && (
-                                        <label className='w-full'>
-                                            <p className='mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5'>
-                                                Email Address <sup className='text-pink-200'>*</sup>
-                                            </p>
-                                            <input 
-                                                type='email'
-                                                name='EmailId'
-                                                value={EmailId}
-                                                onChange={(e) => SetEmailId(e.target.value)}
-                                                placeholder='Enter Email Address'
-                                                className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
-                                                style={{
-                                                        boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-                                                    }}
-                                            />
-                                        </label>
-                                        )}
+                    <form onSubmit={handleSubmit}>
+                        {
+                            !EmailSend && (
+                            <label className='w-full'>
+                                <p className='mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5'>
+                                    Email Address <sup className='text-pink-200'>*</sup>
+                                </p>
+                                <input 
+                                    type='email'
+                                    name='EmailId'
+                                    value={EmailId}
+                                    onChange={(e) => SetEmailId(e.target.value)}
+                                    placeholder='Enter Email Address'
+                                    className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+                                    style={{
+                                            boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+                                        }}
+                                />
+                            </label>
+                            )}
 
-                                        <button
-                                        type='submit'
-                                        className='mt-6 w-full rounded-[8px] bg-yellow-50 py-[12px] px-[12px] font-medium text-richblack-900'>
-                                            {
-                                                EmailSend ? "Resend Email" : "Reset Password"
-                                            }
-                                        </button>
-                                </form>
-                                <div className='mt-6 flex items-center justify-between' >
-                                    <Link to="/login">
-                                      <p className='flex justify-center items-center gap-x-2 text-richblack-5'>
-                                        <BiArrowBack/> Back to Login
-                                      </p>
-                                    </Link>
-                                </div>
+                            <button
+                            type='submit'
+                            className='mt-6 w-full rounded-[8px] bg-yellow-50 py-[12px] px-[12px] font-medium text-richblack-900'>
+                                {
+                                    EmailSend ? "Resend Email" : "Reset Password"
+                                }
+                            </button>
+                    </form>
+                    <div className='mt-6 flex items-center justify-between' >
+                        <Link to="/login">
+                            <p className='flex justify-center items-center gap-x-2 text-richblack-5'>
+                            <BiArrowBack/> Back to Login
+                            </p>
+                        </Link>
+                    </div>
         
 
                 </div>)

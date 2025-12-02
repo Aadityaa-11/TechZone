@@ -12,6 +12,8 @@ const {
     SENDOTP_API,
     SIGNUP_API,
     LOGIN_API,
+    RESETPASSWORDTOKEN_API,
+    FORGETPASSWORD_API
 } = endpoints
 
 export function sendotp(EmailId , navigate){
@@ -95,8 +97,9 @@ export function login(EmailId , Password , navigate){
             console.log("LOGIN API RESPONSE.......")
 
             if(!response.data.success){
-                throw new error(response.data.message)
+                throw new Error(response.data.message)
             }
+
             toast.success("Login Successfull")
             dispatch(setToken(response.data.token))
 
@@ -108,7 +111,7 @@ export function login(EmailId , Password , navigate){
             localStorage.setItem("token" , JSON.stringify(response.data.token))
             localStorage.setItem("User" , JSON.stringify(response.data.user))
             
-            navigate("/Dashboard/my-profile")
+            navigate("/Dashboard")
 
         }catch(error){
             console.log("LOGIN API ERROR.........")
@@ -119,12 +122,38 @@ export function login(EmailId , Password , navigate){
     }
 }
 
-export function Logout(){
-    return async(dispatch) =>{
+// export function Logout(){
+//     return async(dispatch) =>{
         
+//     }
+// }
+    
+
+export function GetPassowordResetToken(EmailId , SetEmailSend){
+    return async(dispatch) => {
+        const toastId = toast.loading("loading....")
+        dispatch(setLoading(true))
+        try{
+            const response = await apiConnector("POST" , RESETPASSWORDTOKEN_API , {
+                EmailId
+            })
+
+            if(!response.data.success){
+                throw new Error(response.data.message)
+            }
+
+            toast.success("Mail Send Successfully")
+            SetEmailSend(true)
+
+        }catch(error){
+            console.log("RESET PASSWORD TOKEN ERROR" , error)
+            toast.error("Failed to Mail Send , Something went wrong")
+        }
+
+        dispatch(setLoading(false))
+        toast.dismiss(toastId)
     }
 }
-    
 
 
 
