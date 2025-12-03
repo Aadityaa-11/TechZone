@@ -94,7 +94,7 @@ export function login(EmailId , Password , navigate){
             const response = await apiConnector("POST" , LOGIN_API , {
                 EmailId , Password
             })
-            console.log("LOGIN API RESPONSE.......")
+            console.log("LOGIN API RESPONSE......." , response)
 
             if(!response.data.success){
                 throw new Error(response.data.message)
@@ -103,13 +103,13 @@ export function login(EmailId , Password , navigate){
             toast.success("Login Successfull")
             dispatch(setToken(response.data.token))
 
-            const UserImage = response.data?.user?.UserImage
-            ? response.data.user.UserImage
-            : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
-            dispatch(setUser({...response.data.user , Image : UserImage}))
+            const UserImage = response.data?.useralreadyexit?.Image
+            ? response.data.useralreadyexit.Image
+            : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.useralreadyexit.FirstName} ${response.data.useralreadyexit.LastName}`
+            dispatch(setUser({...response.data.useralreadyexit , Image : UserImage}))
             
             localStorage.setItem("token" , JSON.stringify(response.data.token))
-            localStorage.setItem("User" , JSON.stringify(response.data.user))
+            localStorage.setItem("User" , JSON.stringify(response.data.useralreadyexit))
             
             navigate("/Dashboard")
 
@@ -122,11 +122,17 @@ export function login(EmailId , Password , navigate){
     }
 }
 
-// export function Logout(){
-//     return async(dispatch) =>{
-        
-//     }
-// }
+export function Logout(navigate){
+    return async(dispatch) =>{
+        dispatch(setToken(null))
+        dispatch(setUser(null))
+        // dispatch(resetCart())
+        localStorage.removeItem("token")
+        localStorage.removeItem("user")
+        toast.success("Logout Successfully")
+        navigate("/")  
+    }
+}
     
 
 export function GetPassowordResetToken(EmailId , SetEmailSend){

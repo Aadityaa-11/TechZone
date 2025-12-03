@@ -5,6 +5,9 @@ import BannerImage1 from "../assets/Images/aboutus1.webp"
 import BannerImage2 from "../assets/Images/aboutus2.webp"
 import BannerImage3 from "../assets/Images/aboutus3.webp"
 import Quote from '../Components/Core/AboutPage/Quote'
+import StatsComponent from '../Components/Core/AboutPage/Stats'
+import LearningGrid from '../Components/Core/AboutPage/LearningGrid'
+import Contactformsection from '../Components/Core/AboutPage/Contactformsection'
 
 
 const Aboutus = () => {
@@ -43,10 +46,10 @@ const Aboutus = () => {
 
         {/* section 3 */}
         <section>
-            <div>
-                <div className='flex'>
-                    <div className='flex flex-col '>
-                        <h1>Our Founding Story</h1>
+            <div className='mx-auto flex flex-col w-11/12 max-w-maxContent justify-between gap-10 text-richblack-500'>
+                <div className='flex  items-center gap-10 lg:flex-row justify-between'>
+                    <div className='my-24 flex flex-col lg:w-[50%] gap-10 '>
+                        <h1 className='bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCB045] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%]'>Our Founding Story</h1>
                         <p className="text-base font-medium text-richblack-300 lg:w-[95%]">
                             Our e-learning platform was born out of a shared vision and
                             passion for transforming education. It all began with a group of
@@ -63,17 +66,22 @@ const Aboutus = () => {
                             individuals from all walks of life to unlock their full
                             potential.
                         </p>
-
                     </div>
 
                     <div>
-                        <img src={FoundingStory} />
+                        <img src={FoundingStory}
+                        height={440} width={440}
+                        className="shadow-[0_0_20px_0] shadow-[#FC6767]"
+                         />
 
                     </div>
                 </div>
 
-                   <div>
-                       <h1>
+
+                   
+                <div className='flex flex-col items-center lg:gap-10 lg:flex-row justify-between'>
+                     <div className='my-24 flex lg:w-[40%] flex-col gap-10'>
+                       <h1 className="bg-gradient-to-b from-[#FF512F] to-[#F09819] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">
                         Our Vision
                        </h1>
                        <p className="text-base font-medium text-richblack-300 lg:w-[95%]">
@@ -84,13 +92,10 @@ const Aboutus = () => {
                             cutting-edge technology with engaging content, fostering a
                             dynamic and interactive learning experience.
                         </p>
-
-
-
                    </div>
 
-                   <div>
-                        <h1>
+                   <div className='my-24 flex lg:w-[40%] flex-col gap-10'>
+                        <h1 className="bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text text-4xl font-semibold lg:w-[70%] ">
                             Our Mission
                         </h1>
                         <p className="text-base font-medium text-richblack-300 lg:w-[95%]">
@@ -98,13 +103,21 @@ const Aboutus = () => {
                         </p>
 
                    </div>
-                   
-                <div>
 
                 </div>
             </div>
 
         </section>
+
+        {/* section 4  */}
+        <StatsComponent/>
+        {/* section 5  */}
+        <section className='relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white'>
+            <LearningGrid/>
+            <Contactformsection/>
+        </section>
+        
+
 
       
     </div>

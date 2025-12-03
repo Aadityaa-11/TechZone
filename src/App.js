@@ -11,6 +11,7 @@ import VerifyEmailId from "./Pages/VerifyEmailId"
 import { Toaster } from 'react-hot-toast';
 import{ ForgetPassword} from './Pages/ForgetPassword'
 import Aboutus from './Pages/Aboutus';
+import Contact from './Pages/Contact';
 function App() {
   return (
     <div className='bg-richblack-900 w-screen min-h-screen flex flex-col font-inter'>
@@ -58,7 +59,13 @@ function App() {
         element={
           <Aboutus/>
         }
-        
+        />
+
+        <Route
+        path='/contact'
+        element={
+          <Contact/>
+        }
         />
     </Routes>
       
