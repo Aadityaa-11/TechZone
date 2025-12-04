@@ -12,6 +12,8 @@ import { Toaster } from 'react-hot-toast';
 import{ ForgetPassword} from './Pages/ForgetPassword'
 import Aboutus from './Pages/Aboutus';
 import Contact from './Pages/Contact';
+import PrivateRoute from './Components/Core/Auth/PrivateRoute';
+import Dashboard from './Pages/Dashboard';
 function App() {
   return (
     <div className='bg-richblack-900 w-screen min-h-screen flex flex-col font-inter'>
@@ -67,6 +69,16 @@ function App() {
           <Contact/>
         }
         />
+
+        <Route
+          element={
+            <PrivateRoute>
+              <Dashboard/>
+            </PrivateRoute>
+          }
+        >
+          {/* <Route path='/dashboard/my-profile' element={<} */}
+        </Route>
     </Routes>
       
 

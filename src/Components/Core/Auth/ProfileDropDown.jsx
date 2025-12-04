@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Logout } from '../../../Services/Operations/authAPI';
 import useOnClickOutside from '../../../hooks/UseOnClickOutside';
 
-const PricefileDropDown = () => {
+const ProfileDropDown = () => {
   const{User} = useSelector( (state) => state.profile)
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,4 +58,4 @@ const PricefileDropDown = () => {
   )
 }
 
-export default PricefileDropDown
+export default ProfileDropDown

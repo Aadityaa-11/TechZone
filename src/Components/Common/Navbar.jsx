@@ -4,7 +4,7 @@ import { Link, matchPath, useLocation } from 'react-router-dom'
 import {NavbarLinks} from '../../data/navbar-links'
 import { useSelector } from 'react-redux'
 import { FaCartShopping } from "react-icons/fa6";
-import ProfileDropDown from "../Core/Auth/PricefileDropDown"
+import ProfileDropDown from "../Core/Auth/ProfileDropDown"
 import { apiConnector } from '../../Services/apiconnector'
 import { Categories } from '../../Services/apis'
 import { BsChevronBarDown } from 'react-icons/bs'
