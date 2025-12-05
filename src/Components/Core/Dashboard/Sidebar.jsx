@@ -5,6 +5,7 @@ import Sidebarlinks from './Sidebarlinks'
 import { VscSignOut } from 'react-icons/vsc'
 import { Logout } from '../../../Services/Operations/authAPI'
 import { useNavigate } from 'react-router-dom'
+import ConfirmationModal from '../../Common/ConfirmationModal'
 
 const Sidebar = () => {
     const {User , loading : profileloading} = useSelector( (state) => state.profile)
@@ -26,22 +27,22 @@ const Sidebar = () => {
   return (
     <>
        <div className='flex h-[calc(100vh-3.5rem)] min-w-[220px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 py-10'>
-           <div>
+           <div className='flex flex-col '>
             {
-                sidebarLinks.map( (link , index) => {
+                sidebarLinks.map( (link) => {
                     if(link.type && User?.AccountType !== link.type) return null
                     return(
-                        <Sidebarlinks key={index} link={link} iconName={link.icon} />
+                        <Sidebarlinks key={link.id} link={link} iconName={link.icon} />
                     )
                 })
             }
            </div>
 
-           <div>
-               <div>
-                    <sidebarLinks
-                    link={ {name: "setting" , Path: "/dashboard/settings"}}
-                    iconName="vscseetingsGear"
+           <div className=' mt-6 h-[1px] w-10/12 bg-richblack-700'>
+               <div className='flex flex-col'>
+                    <Sidebarlinks
+                    link={ {name: "Settings" , path: "/dashboard/settings"}}
+                    iconName="VscSettingsGear"
                      />
 
                      <button 
@@ -55,6 +56,7 @@ const Sidebar = () => {
                             btn2Handler : () => setconfirmationModal(null)
                         })
                      }
+                     className='px-8 py-2 text-sm font-medium text-richblack-300 '
                      >
                         <div className='flex items-center gap-x-2'>
                             <VscSignOut className='text-lg'/>
@@ -64,7 +66,7 @@ const Sidebar = () => {
                </div>
            </div>
        </div>
-       {confirmationModal && <confirmationModal modalData={confirmationModal}/>}
+       {confirmationModal && <ConfirmationModal modalData={confirmationModal}/>}
     </>
   )
 }

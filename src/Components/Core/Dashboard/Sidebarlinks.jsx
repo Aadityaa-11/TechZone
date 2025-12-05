@@ -9,13 +9,17 @@ const Sidebarlinks = ({link , iconName}) => {
     const dispatch = useDispatch()
 
     const MatchRoute = (route) =>{
+
         return matchPath({path:route} , location.pathname)
     }
+
+    console.log("Path" , link.path)
+    console.log("IconName:", iconName, "Icon:", Icon)
+
   return (
     <NavLink
-    to={link.path}
-    
-        className={`absolute px-8 py-2 text-sm font-medium
+       to={link.path}
+        className={`relative px-8 py-2 text-sm font-medium
             ${MatchRoute(link.path)
                 ? "bg-yellow-800 text-yellow-50"
                 : "bg-opacity-0 text-richblack-300"
@@ -30,7 +34,7 @@ const Sidebarlinks = ({link , iconName}) => {
 
         <div className='flex items-center gap-x-2'>
             {/* Icons Goes here  */}
-            <Icon />
+            <Icon className="text-lg"/>
             <span>{link.name}</span> 
         </div>
     </NavLink>
