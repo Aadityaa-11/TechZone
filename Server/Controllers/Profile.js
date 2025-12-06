@@ -7,7 +7,7 @@ require("dotenv").config()
 exports.UpdateProfile = async(req , res)=>{
     try{
         // data fetch
-        console.log("Inside Updatprofile function")
+        console.log("Inside Updateprofile function")
         const{Gender , DateOfBirth , ContactNumber , About} = req.body;
 
         // get UserId 
@@ -25,20 +25,22 @@ exports.UpdateProfile = async(req , res)=>{
         const UserDetails = await User.findById(Id) ;
         // const ProfileDetails = await Profile.findById(UserDetails.AdditionalDetails)
         const ProfileId = UserDetails.AdditionalDetails;
-        const ProfileDetails = await Profile.findById(ProfileId);
+        const UpdatedProfileDetails = await Profile.findById(ProfileId);
 
         // update profile 
-        ProfileDetails.DateOfBirth = DateOfBirth,
-        ProfileDetails.Gender = Gender,
-        ProfileDetails.ContactNumber = ContactNumber,
-        ProfileDetails.About = About
-        await ProfileDetails.save();
+        UpdatedProfileDetails.DateOfBirth = DateOfBirth,
+        UpdatedProfileDetails.Gender = Gender,
+        UpdatedProfileDetails.ContactNumber = ContactNumber,
+        UpdatedProfileDetails.About = About
+
+        // save the updated profile
+        await UpdatedProfileDetails.save();
          
         // return response
         return res.status(200).json({
             success:true,
             message:`Profile Update Successfully`,
-            ProfileDetails,
+            UpdatedProfileDetails,
         })
 
     }catch(error){
@@ -105,7 +107,7 @@ exports.getAllUserDetails = async(req , res) =>{
 exports.UpdateDisplayPicture = async(req , res) =>{
     try{
         console.log("req.files:", req.files); // check keys
-    console.log("req.User:", req.User);
+        console.log("req.User:", req.User);
         console.log("req files" , req.User)
         const DisplayPicture = req.files.DisplayPicture;
         console.log("DisplayPidcure" , DisplayPicture)

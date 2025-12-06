@@ -15,7 +15,7 @@ import Contact from './Pages/Contact';
 import PrivateRoute from './Components/Core/Auth/PrivateRoute';
 import Dashboard from './Pages/Dashboard';
 import MyProfile from './Components/Core/Dashboard/MyProfile';
-
+import Settings from "./Components/Core/Dashboard/Settings"
 function App() {
   return (
     <div className='bg-richblack-900 w-screen min-h-screen flex flex-col font-inter'>
@@ -80,7 +80,8 @@ function App() {
           }
         >
           <Route path='/dashboard/my-profile' element={<MyProfile/>} />
-          
+          <Route path='/dashboard/settings' element={<Settings/>} />
+
         </Route>
 
         

@@ -12,9 +12,9 @@ const IconBtn = ({text , onClick , children , disabled , outline = false , custo
     >
         {
             children ? (
-                <div>
+                <div className='flex items-center gap-x-2'>
+                     {children}
                     <span className={`${outline && "text-yellow-50"}`}>{text}</span>
-                    {children}
                 </div>
 
             ) : (
