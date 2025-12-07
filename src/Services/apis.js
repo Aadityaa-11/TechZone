@@ -20,7 +20,7 @@ export const contactusformEndpoint = {
 
 // setting page api 
 export const SettingsEndpoints = {
-    UPDATE_DISPLAY_PICTURE_API : BASE_URL + "/ profile/updateDisplayPicture",
+    UPDATE_DISPLAY_PICTURE_API : BASE_URL + "/profile/updateDisplayPicture",
     UPDATE_PROFILE_API : BASE_URL + "/profile/UpdateProfile",
     CHANGE_PASSWORD_API : BASE_URL + "/auth/changePassword",
     DELETE_PROFILE_API : BASE_URL + "profile/deleteProfile"
