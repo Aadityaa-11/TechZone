@@ -10,6 +10,28 @@ export const endpoints = {
     FORGETPASSWORD_API : BASE_URL + "/auth/reset-password"
 }
 
+// Course Endpoints
+export const CourseEndPoints = {
+    CREATE_COURSE_API : BASE_URL + "/course/CreateCourse",
+    COURSE_DETAILS_API : BASE_URL + "/course/getCourseDetails",
+    GET_ALL_COURSE_API : BASE_URL + "/course/ShowAllCourse",
+    EDIT_COURSE_API : BASE_URL  + "/course/editCourse",
+    DELETE_COURSE_API : BASE_URL + "/course/deleteCourse",
+    CREATE_SECTION_API : BASE_URL + "/course/addSection",
+    UPDATE_SECTION_API : BASE_URL  + "/course/updateSection",
+    DELETE_SECTION_API : BASE_URL + "/course/deleteSection",
+    CREATE_SUBSECTION_API : BASE_URL + "/course/AddSubSection",
+    UPDATE_SUBSECTION_API : BASE_URL + "/course/updateSubSection",
+    DELETE_SUBSECTION_API : BASE_URL + "/course/deleteSubSection",
+    COURSE_CATEGORIES_API : BASE_URL + "/course/ShowAllCategories",
+    GET_ALL_INSTRUCTOR_COURSES_API : BASE_URL + "/course/getInstructorCourses",
+    GET_FULL_COURSE_DETAILS_AUTHENTICATED : BASE_URL + "/course/getFullCourseDetails",
+    LECTURE_COMPLETIOIN_API : BASE_URL + "/course/updateCourseProgress",
+    CREATE_RATING_API : BASE_URL + "/course/"
+
+
+}
+
 export const Categories = {
     CATEGORIES_API : BASE_URL + "/course/ShowAllCategories"
 }

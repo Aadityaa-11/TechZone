@@ -90,7 +90,7 @@ router.post("/getCourseDetails", GetCourseDetails)
 // Category can Only be Created by Admin
 // TODO: Put IsAdmin Middleware here
   router.post("/CreateCategory", AuthN, IsAdmin, CreateCategory)
-router.get("/ShowAllCategories", ShowAllCategories)
+  router.get("/ShowAllCategories", ShowAllCategories)
 // router.post("/getCategoryPageDetails", categoryPageDetails)
 
 // ********************************************************************************************************

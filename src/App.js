@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './Pages/Home';
 import Navbar from './Components/Common/Navbar';
 import Login from "./Pages/Login"
@@ -16,7 +16,14 @@ import PrivateRoute from './Components/Core/Auth/PrivateRoute';
 import Dashboard from './Pages/Dashboard';
 import MyProfile from './Components/Core/Dashboard/MyProfile';
 import Settings from "./Components/Core/Dashboard/Settings"
+import { useDispatch, useSelector } from 'react-redux';
+import { ACCOUNT_TYPE } from './Utils/Constants';
+import AddCourses from './Components/Core/Dashboard/AddCourse/index';
 function App() {
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const {User} = useSelector( (state) => state.profile)
   return (
     <div className='bg-richblack-900 w-screen min-h-screen flex flex-col font-inter'>
       <Navbar/>
@@ -81,6 +88,27 @@ function App() {
         >
           <Route path='/dashboard/my-profile' element={<MyProfile/>} />
           <Route path='/dashboard/settings' element={<Settings/>} />
+
+
+          {
+            User?.AccountType === ACCOUNT_TYPE.STUDENT && (
+              <>
+                
+              </>
+            )
+          }
+
+          {
+            User?.AccountType === ACCOUNT_TYPE.INSTRUCTOR && (
+              <>
+                <Route path='dashboard/add-course' element={<AddCourses/>} />
+              </>
+            )
+          }
+
+
+
+
 
         </Route>
 
