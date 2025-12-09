@@ -18,7 +18,7 @@ import MyProfile from './Components/Core/Dashboard/MyProfile';
 import Settings from "./Components/Core/Dashboard/Settings"
 import { useDispatch, useSelector } from 'react-redux';
 import { ACCOUNT_TYPE } from './Utils/Constants';
-import AddCourses from './Components/Core/Dashboard/AddCourse/index';
+import AddCourse from './Components/Core/Dashboard/AddCourse/index';
 function App() {
 
   const dispatch = useDispatch()
@@ -101,7 +101,7 @@ function App() {
           {
             User?.AccountType === ACCOUNT_TYPE.INSTRUCTOR && (
               <>
-                <Route path='dashboard/add-course' element={<AddCourses/>} />
+                <Route path='/dashboard/add-course' element={<AddCourse/>} />
               </>
             )
           }
