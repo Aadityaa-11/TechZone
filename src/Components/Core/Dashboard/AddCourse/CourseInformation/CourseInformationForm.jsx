@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { FetchCourseCategories } from "../../../../../Services/Operations/CourseDetailsAPI"
 import ChipInput from "./ChipInput"
+import Upload from "../Upload"
 
 export default function CourseInformation(){
 
@@ -157,7 +158,39 @@ export default function CourseInformation(){
              setValue = {setValue}
              getValues = {getValues}
              />
-             {/* Course Tags  */}
+
+             {/* Course Thumbnail Image  */}
+             <Upload 
+               name="CourseImage"
+               label="Course Thumbnail"
+               register = {register}
+               setValue = {setValue}
+               errors = {errors}
+               EditData = {EditCourse ? Course?.Thumbnail : null}
+             />
+
+
+             {/* Benefits of the Course  */}
+             <div>
+                <label>
+                    Benefits of the Course <sup className="text-pink-200">*</sup>
+                </label>
+                <textarea 
+                   id="CourseBenefits"
+                   placeholder="Enter benefits of the Course"
+                   {...register("CourseBenefits" , {required: true})}
+                   className="form-style resize-x-none min-h-[130px] w-full" 
+                />
+                {
+                    errors.CourseBenefits && (
+                        <span className="ml-2 text-xs tracking-wide text-pink-200">
+                            Benefits of the Course is required
+                        </span>
+                    )
+                }
+             </div>
+
+
 
 
 
