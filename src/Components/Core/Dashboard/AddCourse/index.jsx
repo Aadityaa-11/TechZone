@@ -4,11 +4,11 @@ import RenderSteps from "./RenderSteps";
 export default function AddCourse(){
     return(
         <>
-           <div>
-               <div>
-                  <h1 className="">Add Course</h1>
+           <div className="flex gap-x-6 items-start w-full">
+               <div className="flex flex-col flex-1">
+                  <h1 className="mb-14 text-3xl text-richblack-5 font-medium">Add Course</h1>
 
-                  <div><RenderSteps/></div>
+                  <div className="flex-1"><RenderSteps/></div>
                </div>
 
                {/* Course Upload Tips  */}

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {useDropzone} from "react-dropzone"
 import {FiUploadCloud} from "react-icons/fi"
 import { useSelector } from 'react-redux'
@@ -19,16 +19,50 @@ const Upload = ({
 
     const {Course} = useSelector( (state) => state.Course)
     const[ SelectedFile , setSelectedFile ] = useState(null)
-    cosnt [PreviewSource , setPreviewSource] = useState(
+    const [PreviewSource , setPreviewSource] = useState(
         ViewData ? ViewData : EditData ? EditData : ""
     )
 
     const inputRef = useRef(null)
+
+    const onDrop = (acceptedFiles) => {
+        const file = acceptedFiles[0]
+        if(file){
+            previewFile(file)
+            setSelectedFile(file)
+        }
+    }
+
+    const{ getRootProps , getInputProps , isDragActive} = useDropzone({
+        accept : !video 
+        ? {"image/*" : [".jpeg" , ".jpg" , ".png"]}
+        : { "video/*" : [".mp4"]},
+        onDrop,
+    })
+
+    const previewFile = (file) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onloadend = () => {
+            setPreviewSource(reader.result)
+        }
+    }
+
+    useEffect( () => {
+        register(name , {required : true})
+
+    } , [register])
+
+    useEffect( () => {
+        setValue(name , SelectedFile)
+    } , [SelectedFile , setValue])
   return (
     <div className='flex flex-col space-y-2'>
         <label htmlFor={name} className='text-sm text-richblack-5'>{label}</label>
 
-        <div>
+        <div  className={`${isDragActive ? "bg-richblack-600" : "bg-richblack-700"}
+        flex min-h-[250px] cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500`}
+        {...getRootProps}>
             {
                 PreviewSource ? (
                     <div>
@@ -65,15 +99,15 @@ const Upload = ({
                     {...getRootProps()}
                     >
 
-                        <input {...getInputProps()} ref={inputRef}/>
-                        <div>
+                        <input {...getInputProps()} />
+                        <div className='grid aspect-square w-14 place-items-center rounded-full bg-pure-greys-800'>
                             <FiUploadCloud className='text-2xl text-yellow-50' />
                         </div>
-                        <p>
+                        <p className='mt-2 max-w-[200px] text-center text-sm text-richblack-200'>
                             Drag and drop an {!video ? "image" : "video"} , or click to {" "}
-                            <span>Browse</span> a file
+                            <span className='font-semibold text-yellow-50'>Browse</span> a file
                         </p>
-                        <ul>
+                        <ul className='mt-10 flex list-desc justify-between space-x-12 text-center text-md text-richblack-200'>
                             <li>Aspect ratio 16 : 9</li>
                             <li>Recommended size 1024x576</li>
                         </ul>
@@ -85,7 +119,9 @@ const Upload = ({
         </div>
         {
             errors[name] && (
-                <span className='ml-2 text-xs tracking-wide text-pink-200'>{label}</span>
+                <span className='ml-2 text-xs tracking-wide text-pink-200'>
+                    {label} is required
+                </span>
             )
         }
     </div>

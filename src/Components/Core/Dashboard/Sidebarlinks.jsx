@@ -13,8 +13,8 @@ const Sidebarlinks = ({link , iconName}) => {
         return matchPath({path:route} , location.pathname)
     }
 
-    console.log("Path" , link.path)
-    console.log("IconName:", iconName, "Icon:", Icon)
+    // console.log("Path" , link.path)
+    // console.log("IconName:", iconName, "Icon:", Icon)
 
   return (
     <NavLink

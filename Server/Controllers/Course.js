@@ -16,27 +16,29 @@ exports.CreateCourse = async(req , res) =>{
             CourseDescription , 
             WhatYouWillLearn , 
             Price , 
-            Tags ,
+            Tags : _Tags ,
             category,
             Status,
             Instructions : _Instructions,
         } = req.body;
-
+       console.log("hii hii ")
         // get thumbnail
         const ThumbNail = req.files.ThumbNailImage;
 
+                // convert the Tag and Instructions front stringyarray to array
+        const Tags = JSON.parse(_Tags);
+        const Instructions = JSON.parse(_Instructions)
 
+ console.log("HIII after thumbnail image")
         // validation ..
-        if(!CourseName || !CourseDescription || !WhatYouWillLearn || !Price || !Tags || !ThumbNail  || !category || !_Instructions){
+        if(!CourseName || !CourseDescription || !WhatYouWillLearn || !Price || !Tags || !ThumbNail  || !category || !Instructions.length){
             return res.status(400).json({
                 success:false,
                 message: `All Fields are Required!!`
             })
         }
 
-        // convert the Tag and Instructions front stringyarray to array
-         Tags = JSON.parse(Tags);
-        const Instructions = JSON.parse(_Instructions)
+
         // if(typeof Tag == "string"){
         //     Tag = Tag.split(",").map(Tag => Tag.trim())
         // }

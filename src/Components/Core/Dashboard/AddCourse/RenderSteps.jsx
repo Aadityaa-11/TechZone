@@ -29,7 +29,7 @@ const RenderSteps = () => {
 
         <div className='relative mb-2 flex w-full justify-center'>
             {
-                Steps.map( (item) => (
+                Steps.map( (item ) => (
                     <>
                         <div 
                         key={item.id}
